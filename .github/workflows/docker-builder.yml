@@ -39,7 +39,7 @@ jobs:
       - name: Checkout Private
         uses: actions/checkout@v7
         with:
-          repository: xzhhzx222/Actions-OpenWrt-Private
+          repository: xzhhzx222/actions-private
           token: ${{ secrets.MY_PAT }}
           path: private
 
