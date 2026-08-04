@@ -1,0 +1,44 @@
+#==========================================================================
+# https://github.com/ophub/amlogic-s9xxx-openwrt
+# Description: Delete older releases and workflows runs
+#==========================================================================
+
+name: Delete older releases and workflows
+
+on:
+  repository_dispatch:
+    types:
+      - Delete older releases and workflows
+  workflow_dispatch:
+  schedule:
+   - cron: 0 0 * * *
+
+env:
+  TZ: Asia/Shanghai
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+      actions: write
+
+    steps:
+      # - name: Checkout
+      #   uses: actions/checkout@v7
+
+      - name: Initialization environment
+        env:
+          DEBIAN_FRONTEND: noninteractive
+        run: |
+          sudo timedatectl set-timezone "${TZ}"
+
+      - name: Delete releases and workflows runs
+        uses: ophub/delete-releases-workflows@main
+        with:
+          delete_releases: true
+          delete_tags: true
+          releases_keep_latest: 1
+          delete_workflows: true
+          workflows_keep_day: 14
+          gh_token: ${{ secrets.GITHUB_TOKEN }}

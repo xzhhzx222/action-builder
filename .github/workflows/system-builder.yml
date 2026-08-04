@@ -1,0 +1,211 @@
+#==========================================================================
+# https://github.com/xzhhzx222/action-builder
+#==========================================================================
+
+name: System Builder
+
+on:
+  workflow_dispatch:
+    schedule:
+      - cron: '0 18 * * 5'
+
+env:
+  CONFIG_FILE: shell/.config.build
+  DIY_P1_SH: shell/diy-part1.sh
+  DIY_P2_SH: shell/diy-part2.sh
+  MK_PKG_SH: shell/make-packages.sh
+  MK_IMG_SH: shell/make-images.sh
+  TZ: Asia/Shanghai
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+
+    strategy:
+      fail-fast: false
+      matrix:
+        target:
+          - "immortalwrt/25.12.1+x86-64/generic"
+          - "immortalwrt/24.10.6+x86-64/generic"
+          - "immortalwrt/25.12.1+rockchip-armv8/radxa_e52c"
+          - "immortalwrt/24.10.6+rockchip-armv8/radxa_e52c"
+
+    name: Build ${{ matrix.target }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Checkout Private
+        uses: actions/checkout@v7
+        with:
+          repository: xzhhzx222/Actions-OpenWrt-Private
+          token: ${{ secrets.MY_PAT }}
+          path: private
+
+      - name: Create virtual disk for extended storage
+        run: |
+          mnt_size=$(expr $(df -h /mnt | tail -1 | awk '{print $4}' | sed 's/[[:alpha:]]//g' | sed 's/\..*//') - 1)
+          root_size=$(expr $(df -h / | tail -1 | awk '{print $4}' | sed 's/[[:alpha:]]//g' | sed 's/\..*//') - 4)
+          sudo truncate -s "${mnt_size}"G /mnt/mnt.img
+          sudo truncate -s "${root_size}"G /root.img
+          sudo losetup /dev/loop6 /mnt/mnt.img
+          sudo losetup /dev/loop7 /root.img
+          sudo pvcreate /dev/loop6
+          sudo pvcreate /dev/loop7
+          sudo vgcreate github /dev/loop6 /dev/loop7
+          sudo lvcreate -n runner -l 100%FREE github
+          sudo mkfs.xfs -f -i sparse=0 -b size=4096 /dev/github/runner
+          sudo mkdir -p /workdir
+          sudo mount /dev/github/runner /workdir
+          sudo chown -R runner:runner /workdir
+          df -Th
+
+      - name: Initialization environment
+        working-directory: /workdir
+        env:
+          DEBIAN_FRONTEND: noninteractive
+        run: |
+          BUILD_REPO="$(echo "${{ matrix.target }}" | cut -d "+" -f1)"
+          BUILD_TARGET="$(echo "${{ matrix.target }}" | cut -d "+" -f2)"
+
+          TARGET_DISTRO="$(echo "${BUILD_REPO}" | cut -d "/" -f1)"
+          TARGET_VERSION="$(echo "${BUILD_REPO}" | cut -d "/" -f2)"
+          TARGET_PLATFORM="$(echo "${BUILD_TARGET}" | cut -d "/" -f1)"
+          TARGET_PROFILE="$(echo "${BUILD_TARGET}" | cut -d "/" -f2)"
+          TARGET_BOARD="$(echo "${TARGET_PLATFORM}" | cut -d "-" -f1)"
+          TARGET_SUBTARGET="$(echo "${TARGET_PLATFORM}" | cut -d "-" -f2)"
+
+          CUSTOM_DIR="package/xzhhzx222"
+
+          chmod +x "$GITHUB_WORKSPACE/${DIY_P1_SH}" "$GITHUB_WORKSPACE/${DIY_P2_SH}" \
+            "$GITHUB_WORKSPACE/${MK_PKG_SH}" "$GITHUB_WORKSPACE/${MK_IMG_SH}"
+          mkdir -p "sdk/${CUSTOM_DIR}" "ib/packages"
+          ln -sf /workdir/sdk $GITHUB_WORKSPACE/sdk
+          ln -sf /workdir/ib $GITHUB_WORKSPACE/ib
+          cp -rf $GITHUB_WORKSPACE/private/files/ ib/
+          cp -rf $GITHUB_WORKSPACE/shell/ sdk/
+
+          echo "::group::install depends"
+          sudo apt-get -y update
+          sudo apt-get -y install $(cat sdk/shell/depends.build) $(cat sdk/shell/depends.compile)
+          sudo apt-get -y autoremove --purge
+          sudo apt-get -y clean
+          echo "::endgroup::"
+
+          RELEASE_URL="https://downloads.${TARGET_DISTRO}.org/releases"
+          # LATEST_VERSION="$(curl --retry 3 --retry-all-errors --retry-delay 10 -A "${DL_UA}" -fsSL "${RELEASE_URL}" | grep -oE '[0-9]+\.[0-9]+\.[0-9]+' | sort -V | tail -n1)"
+          DOWNLOAD_URL="${RELEASE_URL}/${TARGET_VERSION}/targets/${TARGET_BOARD}/${TARGET_SUBTARGET}"
+          DL_UA="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36"
+
+          echo "::group::download sha256sums"
+          curl --retry 3 --retry-all-errors --retry-delay 10 -A "${DL_UA}" -fLO "$DOWNLOAD_URL/sha256sums"
+          echo "::endgroup::"
+
+          echo "::group::download sdk"
+          SDK_NAME="$(cat sha256sums | grep -E "sdk-(.*)${TARGET_PLATFORM}" | cut -d "*" -f 2)"
+          curl --retry 3 --retry-all-errors --retry-delay 10 -A "${DL_UA}" -fLO "$DOWNLOAD_URL/$SDK_NAME"
+          tar -vxf "$SDK_NAME" -C "sdk" --strip-components 1
+          echo "::endgroup::"
+
+          echo "::group::download ib"
+          IB_NAME="$(cat sha256sums | grep -E "imagebuilder-(.*)${TARGET_PLATFORM}" | cut -d "*" -f 2)"
+          curl --retry 3 --retry-all-errors --retry-delay 10 -A "${DL_UA}" -fLO "$DOWNLOAD_URL/$IB_NAME"
+          tar -vxf "$IB_NAME" -C "ib" --strip-components 1
+          echo "::endgroup::"
+
+          echo "BUILD_REPO=${BUILD_REPO}" >> $GITHUB_ENV
+          echo "BUILD_TARGET=${BUILD_TARGET}" >> $GITHUB_ENV
+          echo "TARGET_DISTRO=${TARGET_DISTRO}" >> $GITHUB_ENV
+          echo "TARGET_VERSION=${TARGET_VERSION}" >> $GITHUB_ENV
+          echo "TARGET_PLATFORM=${TARGET_PLATFORM}" >> $GITHUB_ENV
+          echo "TARGET_PROFILE=${TARGET_PROFILE}" >> $GITHUB_ENV
+          echo "TARGET_BOARD=${TARGET_BOARD}" >> $GITHUB_ENV
+          echo "TARGET_SUBTARGET=${TARGET_SUBTARGET}" >> $GITHUB_ENV
+          echo "CUSTOM_DIR=${CUSTOM_DIR}" >> $GITHUB_ENV
+
+      - name: Compile the package
+        run: |
+          cd sdk
+          pwd && ls -lah
+          $GITHUB_WORKSPACE/$MK_PKG_SH
+
+      - name: Check compile space usage
+        if: (!cancelled())
+        run: |
+          df -hT
+          echo "::group::packages directory list"
+          ls -lah sdk/bin/packages/*/ 2>/dev/null || \
+            echo "No packages directory found."
+          ls -lah sdk/bin/packages/*/*/ 2>/dev/null || \
+            echo "No packages found."
+          echo "::endgroup::"
+
+      - name: Organize compile files
+        id: organize_compile
+        run: |
+          mv -vf sdk/bin/packages/*/*/*.apk ib/packages/ 2>/dev/null || \
+            mv -vf sdk/bin/packages/*/*/*.ipk ib/packages/
+          echo "status=success" >> $GITHUB_OUTPUT
+
+      - name: Build the firmware
+        if: steps.organize_compile.outputs.status == 'success' && !cancelled()
+        run: |
+          cd ib
+          pwd && ls -lah
+          $GITHUB_WORKSPACE/$MK_IMG_SH
+
+      - name: Check build space usage
+        if: (!cancelled())
+        run: |
+          df -hT
+          echo "::group::targets directory list"
+          ls -lah ib/bin/targets/*/*/ 2>/dev/null || \
+            echo "No targets found."
+          echo "::endgroup::"
+
+      - name: Organize build files
+        id: organize_build
+        run: |
+          cd ib/bin/targets/*/*
+          ls -lh sha256sums
+          sed -i "/kernel/d" sha256sums
+          sed -i "/rootfs/d" sha256sums
+          rm -vf *kernel.bin 2>/dev/null || true
+          rm -vf *rootfs*.gz 2>/dev/null || true
+          for filename in ${TARGET_DISTRO}-${TARGET_VERSION}-*; do
+            [ -e "${filename}" ] && \
+              mv -v "${filename}" "openwrt-${filename#${TARGET_DISTRO}-${TARGET_VERSION}-}"
+          done
+          echo "status=success" >> $GITHUB_OUTPUT
+
+      - name: Commit and push
+        if: steps.organize_build.outputs.status == 'success' && !cancelled()
+        run: |
+          cd private
+
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-action[bot]"
+
+          git checkout --orphan release-orphan
+          git rm -rf .
+
+          cp -rf $GITHUB_WORKSPACE/ib/bin/targets/*/*/* $GITHUB_WORKSPACE/private/
+          {
+            echo "# ${BUILD_REPO}"
+            echo
+            echo "## ${BUILD_TARGET}"
+            echo
+            echo "- **Method:** SDK & Image ${{ github.workflow }}"
+            echo "- **Resource:** <https://downloads.${TARGET_DISTRO}.org/releases/${TARGET_VERSION}/targets/${TARGET_BOARD}/${TARGET_SUBTARGET}>"
+            echo "- **Release on:** $(date)"
+          } > README.md
+
+          git add -A
+          git commit -am "Updated"
+
+          git branch -M "${{ matrix.target }}"
+
+          git push -f origin "${{ matrix.target }}"

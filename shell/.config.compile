@@ -1,0 +1,125 @@
+#
+# OpenWrt Configuration
+#
+CONFIG_TARGET_x86=y
+CONFIG_TARGET_x86_64=y
+CONFIG_TARGET_x86_64_DEVICE_generic=y
+
+#
+# Root filesystem archives
+#
+# CONFIG_TARGET_ROOTFS_TARGZ is not set
+
+#
+# Image Options
+#
+CONFIG_TARGET_KERNEL_PARTSIZE=32
+CONFIG_TARGET_ROOTFS_PARTSIZE=300
+
+#
+# Global build settings
+#
+# CONFIG_JSON_OVERVIEW_IMAGE_INFO is not set
+# CONFIG_JSON_CYCLONEDX_SBOM is not set
+
+#
+# Advanced configuration options (for developers)
+#
+CONFIG_CCACHE=y
+CONFIG_CCACHE_DIR="$(TOPDIR)/.ccache"
+
+#
+# Network Devices
+#
+# CONFIG_PACKAGE_kmod-8139cp is not set
+# CONFIG_PACKAGE_kmod-8139too is not set
+# CONFIG_PACKAGE_kmod-amazon-ena is not set
+# CONFIG_PACKAGE_kmod-bnx2 is not set
+# CONFIG_PACKAGE_kmod-dwmac-intel is not set
+# CONFIG_PACKAGE_kmod-forcedeth is not set
+# CONFIG_PACKAGE_kmod-pcnet32 is not set
+# CONFIG_PACKAGE_kmod-r8101 is not set
+# CONFIG_PACKAGE_kmod-tulip is not set
+
+#
+# USB Support
+#
+# CONFIG_PACKAGE_kmod-usb-net-rtl8150 is not set
+
+#
+# Additional packages
+#
+CONFIG_PACKAGE_acme-acmesh-dnsapi=y
+CONFIG_PACKAGE_autocore=y
+CONFIG_PACKAGE_ddns-scripts-cloudflare=y
+# CONFIG_PACKAGE_default-settings is not set
+CONFIG_PACKAGE_geoip-shell=y
+CONFIG_PACKAGE_htop=y
+CONFIG_PACKAGE_iperf3=y
+CONFIG_PACKAGE_kmod-crypto-ecdh=y
+CONFIG_PACKAGE_kmod-crypto-gcm=y
+CONFIG_PACKAGE_kmod-crypto-sha256=y
+CONFIG_PACKAGE_luci=y
+CONFIG_PACKAGE_open-vm-tools=n
+CONFIG_PACKAGE_open-vm-tools-fuse=n
+CONFIG_PACKAGE_qemu-ga=y
+CONFIG_PACKAGE_strongswan-charon=y
+CONFIG_PACKAGE_strongswan-mod-aes=y
+CONFIG_PACKAGE_strongswan-mod-attr=y
+CONFIG_PACKAGE_strongswan-mod-eap-identity=y
+CONFIG_PACKAGE_strongswan-mod-eap-mschapv2=y
+CONFIG_PACKAGE_strongswan-mod-gcm=y
+CONFIG_PACKAGE_strongswan-mod-gmp=y
+CONFIG_PACKAGE_strongswan-mod-hmac=y
+CONFIG_PACKAGE_strongswan-mod-kernel-netlink=y
+CONFIG_PACKAGE_strongswan-mod-mgf1=y
+CONFIG_PACKAGE_strongswan-mod-openssl=y
+CONFIG_PACKAGE_strongswan-mod-pem=y
+CONFIG_PACKAGE_strongswan-mod-pkcs1=y
+CONFIG_PACKAGE_strongswan-mod-pkcs12=y
+CONFIG_PACKAGE_strongswan-mod-pubkey=y
+CONFIG_PACKAGE_strongswan-mod-random=y
+CONFIG_PACKAGE_strongswan-mod-rc2=y
+CONFIG_PACKAGE_strongswan-mod-sha2=y
+CONFIG_PACKAGE_strongswan-mod-socket-default=y
+CONFIG_PACKAGE_strongswan-mod-x509=y
+CONFIG_PACKAGE_strongswan-pki=y
+CONFIG_PACKAGE_strongswan-swanctl=y
+CONFIG_PACKAGE_tree=y
+CONFIG_PACKAGE_vim-full=y
+
+#
+# OpenClash packages
+#
+CONFIG_PACKAGE_kmod-inet-diag=y
+CONFIG_PACKAGE_kmod-nft-tproxy=y
+
+#
+# Translations
+#
+CONFIG_LUCI_LANG_zh_Hans=y
+
+#
+# Default Applications
+#
+CONFIG_PACKAGE_luci-app-ddns=y
+CONFIG_PACKAGE_luci-app-ramfree=y
+# CONFIG_PACKAGE_luci-app-rclone_INCLUDE_rclone-ng is not set
+# CONFIG_PACKAGE_luci-app-rclone_INCLUDE_rclone-webui is not set
+CONFIG_PACKAGE_luci-app-timewol=y
+
+#
+# Additional Applications
+#
+CONFIG_PACKAGE_luci-app-advanced=y
+CONFIG_PACKAGE_luci-app-openclash=y
+CONFIG_PACKAGE_luci-app-rtp2httpd=y
+CONFIG_PACKAGE_luci-app-timecontrol=n
+CONFIG_PACKAGE_luci-app-ttyd=y
+CONFIG_PACKAGE_luci-app-wechatpush=y
+CONFIG_PACKAGE_luci-app-wolplus=y
+
+#
+# Additional Protocols
+#
+CONFIG_PACKAGE_luci-proto-xfrm=y

@@ -1,0 +1,35 @@
+#
+# Global build settings
+#
+# CONFIG_ALL_NONSHARED is not set
+# CONFIG_ALL_KMODS is not set
+# CONFIG_ALL is not set
+
+#
+# Packages
+#
+CONFIG_PACKAGE_geoip-shell=m
+
+#
+# Collections
+#
+CONFIG_PACKAGE_luci-light=m
+
+#
+# Translations
+#
+CONFIG_LUCI_LANG_zh_Hans=y
+
+#
+# Applications
+#
+CONFIG_PACKAGE_luci-app-advanced=m
+CONFIG_PACKAGE_luci-app-openclash=m
+CONFIG_PACKAGE_luci-app-rtp2httpd=m
+CONFIG_PACKAGE_luci-app-wechatpush=m
+CONFIG_PACKAGE_luci-app-wolplus=m
+
+#
+# Themes
+#
+CONFIG_PACKAGE_luci-theme-argon=m
