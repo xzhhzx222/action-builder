@@ -80,10 +80,9 @@ jobs:
 
           chmod +x "$GITHUB_WORKSPACE/${DIY_P1_SH}" "$GITHUB_WORKSPACE/${DIY_P2_SH}" \
             "$GITHUB_WORKSPACE/${MK_PKG_SH}" "$GITHUB_WORKSPACE/${MK_IMG_SH}"
-          mkdir -p "sdk/bin" "sdk/${CUSTOM_DIR}" "ib/bin" "packages"
+          mkdir -p "sdk/bin" "sdk/${CUSTOM_DIR}" "ib/bin" "ib/packages"
           ln -sf /workdir/sdk $GITHUB_WORKSPACE/sdk
           ln -sf /workdir/ib $GITHUB_WORKSPACE/ib
-          ln -sf /workdir/packages $GITHUB_WORKSPACE/packages
           cp -rf $GITHUB_WORKSPACE/private/files/ ib/
 
           echo "::group::docker pull"
@@ -109,7 +108,6 @@ jobs:
             --user root \
             -v "./sdk/bin:${BUILD_DIR}/bin" \
             -v "./sdk/${CUSTOM_DIR}:${BUILD_DIR}/${CUSTOM_DIR}" \
-            -v "./packages:${BUILD_DIR}/packages" \
             -v "./shell:${BUILD_DIR}/shell" \
             -e BUILD_DIR="${BUILD_DIR}" \
             -e CUSTOM_DIR="${CUSTOM_DIR}" \
@@ -143,8 +141,8 @@ jobs:
         id: organize_compile
         run: |
           sudo chown -R runner:runner sdk/bin
-          mv -vf sdk/bin/packages/*/*/*.apk packages/ 2>/dev/null || \
-            mv -vf sdk/bin/packages/*/*/*.ipk packages/
+          mv -vf sdk/bin/packages/*/*/*.apk ib/packages/ 2>/dev/null || \
+            mv -vf sdk/bin/packages/*/*/*.ipk ib/packages/
           echo "status=success" >> $GITHUB_OUTPUT
 
       - name: Build the firmware
@@ -154,7 +152,7 @@ jobs:
             --user root \
             -v "./ib/bin:${BUILD_DIR}/bin" \
             -v "./ib/files:${BUILD_DIR}/files" \
-            -v "./packages:${BUILD_DIR}/packages" \
+            -v "./ib/packages:${BUILD_DIR}/packages" \
             -v "./shell:${BUILD_DIR}/shell" \
             -e TARGET_PROFILE="${TARGET_PROFILE}" \
             -e MK_IMG_SH="${MK_IMG_SH}" \
