@@ -8,13 +8,13 @@ Automated OpenWrt/ImmortalWrt build environment with GitHub Actions.
 
 ## Source code
 
-- [OpenWrt](https://github.com/openwrt/openwrt)
 - [Immortalwrt](https://github.com/immortalwrt/immortalwrt)
 
 ## Idea from
 
 - [P3TERX/Actions-OpenWrt](https://github.com/P3TERX/Actions-OpenWrt)
 - [ophub/amlogic-s9xxx-openwrt](https://github.com/ophub/amlogic-s9xxx-openwrt)
+- [wukongdaily/ImmortalWrt-ImageBuilder](https://github.com/wukongdaily/ImmortalWrt-ImageBuilder)
 
 ## Thanks to
 
