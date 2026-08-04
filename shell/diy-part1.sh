@@ -8,6 +8,16 @@
 #echo 'src-git passwall https://github.com/xiaorouji/openwrt-passwall' >>feeds.conf.default
 
 
+# 添加destan19/luci-app-harbor-file
+git clone https://github.com/destan19/luci-app-harbor-file.git "${CUSTOM_DIR}/luci-app-harbor-file"
+
+# 添加destan19/OpenAppFilter
+git clone https://github.com/destan19/OpenAppFilter.git package/destan19/OpenAppFilter
+mv -vf package/destan19/OpenAppFilter/luci-app-oaf/ "${CUSTOM_DIR}/"
+mv -vf package/destan19/OpenAppFilter/oaf/ "${CUSTOM_DIR}/"
+mv -vf package/destan19/OpenAppFilter/open-app-filter/ "${CUSTOM_DIR}/"
+rm -rf package/destan19/
+
 # 添加friendly-bits/geoip-shell
 git clone https://github.com/friendly-bits/geoip-shell.git package/friendly-bits/geoip-shell
 chmod +x package/friendly-bits/geoip-shell/OpenWrt/prep-owrt-package.sh

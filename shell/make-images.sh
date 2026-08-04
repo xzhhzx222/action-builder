@@ -69,10 +69,11 @@ CUSTOM_PKG="${CUSTOM_PKG} \
 CUSTOM_PKG="${CUSTOM_PKG} \
   geoip-shell \
   \
-  luci-app-advanced luci-app-openclash luci-app-rtp2httpd luci-app-wechatpush \
-  luci-app-wolplus \
+  luci-app-advanced luci-app-harbor-file luci-app-oaf luci-app-openclash \
+  luci-app-rtp2httpd luci-app-wechatpush luci-app-wolplus \
   \
-  luci-i18n-rtp2httpd-zh-cn luci-i18n-wechatpush-zh-cn luci-i18n-wolplus-zh-cn \
+  luci-i18n-harbor-file-zh-cn luci-i18n-rtp2httpd-zh-cn luci-i18n-oaf-zh-cn \
+  luci-i18n-wechatpush-zh-cn luci-i18n-wolplus-zh-cn \
   "
 
 echo "::group::make image"
