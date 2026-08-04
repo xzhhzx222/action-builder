@@ -1,4 +1,4 @@
-# action-builder
+# actions-builder
 
 Automated ImmortalWrt build environment with GitHub Actions.
 
@@ -8,7 +8,7 @@ Automated ImmortalWrt build environment with GitHub Actions.
 
 ## Source code
 
-- [Immortalwrt](https://github.com/immortalwrt/immortalwrt)
+- [immortalwrt/immortalwrt](https://github.com/immortalwrt/immortalwrt)
 - [ImmortalWrt Downloads](https://downloads.immortalwrt.org)
 
 ## Idea from
