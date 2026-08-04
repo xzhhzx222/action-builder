@@ -21,14 +21,14 @@ jobs:
     runs-on: ubuntu-24.04
     permissions:
       contents: write
-    
+
     strategy:
       fail-fast: false
       matrix:
         target:
           - "v25.12.1"
           - "v24.10.6"
-    
+
     name: Compile ${{ matrix.target }}
 
     steps:
