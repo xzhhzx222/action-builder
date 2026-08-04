@@ -68,15 +68,15 @@ jobs:
         env:
           DEBIAN_FRONTEND: noninteractive
         run: |
-          BUILD_REPO="$(echo "${{ matrix.target }}" | cut -d "+" -f1)"
-          BUILD_TARGET="$(echo "${{ matrix.target }}" | cut -d "+" -f2)"
+          BUILD_REPO="$(echo "${{ matrix.target }}" | cut -d'+' -f1)"
+          BUILD_TARGET="$(echo "${{ matrix.target }}" | cut -d'+' -f2)"
 
-          TARGET_DISTRO="$(echo "${BUILD_REPO}" | cut -d "/" -f1)"
-          TARGET_VERSION="$(echo "${BUILD_REPO}" | cut -d "/" -f2)"
-          TARGET_PLATFORM="$(echo "${BUILD_TARGET}" | cut -d "/" -f1)"
-          TARGET_PROFILE="$(echo "${BUILD_TARGET}" | cut -d "/" -f2)"
-          TARGET_BOARD="$(echo "${TARGET_PLATFORM}" | cut -d "-" -f1)"
-          TARGET_SUBTARGET="$(echo "${TARGET_PLATFORM}" | cut -d "-" -f2)"
+          TARGET_DISTRO="$(echo "${BUILD_REPO}" | cut -d'/' -f1)"
+          TARGET_VERSION="$(echo "${BUILD_REPO}" | cut -d'/' -f2)"
+          TARGET_PLATFORM="$(echo "${BUILD_TARGET}" | cut -d'/' -f1)"
+          TARGET_PROFILE="$(echo "${BUILD_TARGET}" | cut -d'/' -f2)"
+          TARGET_BOARD="$(echo "${TARGET_PLATFORM}" | cut -d'-' -f1)"
+          TARGET_SUBTARGET="$(echo "${TARGET_PLATFORM}" | cut -d'-' -f2)"
 
           CUSTOM_DIR="package/xzhhzx222"
 
@@ -96,7 +96,8 @@ jobs:
           echo "::endgroup::"
 
           MAIN_URL="https://downloads.${TARGET_DISTRO}.org/releases"
-          # LATEST_VERSION="$(curl --retry 3 --retry-all-errors --retry-delay 10 -A "${DL_UA}" -fsSL "${MAIN_URL}" | grep -oE '[0-9]+\.[0-9]+\.[0-9]+' | sort -V | tail -n1)"
+          # LATEST_VERSION="$(curl --retry 3 --retry-all-errors --retry-delay 10 -A "${DL_UA}" \
+          #   -fsSL "${MAIN_URL}" | grep -oE '[0-9]+\.[0-9]+\.[0-9]+' | sort -V | tail -n1)"
           DL_URL="${MAIN_URL}/${TARGET_VERSION}/targets/${TARGET_BOARD}/${TARGET_SUBTARGET}"
           DL_UA="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36"
 
@@ -105,13 +106,13 @@ jobs:
           echo "::endgroup::"
 
           echo "::group::download sdk"
-          SDK_NAME="$(cat sha256sums | grep -E "sdk-(.*)${TARGET_PLATFORM}" | cut -d "*" -f 2)"
+          SDK_NAME="$(cat sha256sums | grep -E "sdk-(.*)${TARGET_PLATFORM}" | cut -d'*' -f2)"
           curl --retry 3 --retry-all-errors --retry-delay 10 -A "${DL_UA}" -fLO "$DL_URL/$SDK_NAME"
           tar -vxf "$SDK_NAME" -C "sdk" --strip-components 1
           echo "::endgroup::"
 
           echo "::group::download ib"
-          IB_NAME="$(cat sha256sums | grep -E "imagebuilder-(.*)${TARGET_PLATFORM}" | cut -d "*" -f 2)"
+          IB_NAME="$(cat sha256sums | grep -E "imagebuilder-(.*)${TARGET_PLATFORM}" | cut -d'*' -f2)"
           curl --retry 3 --retry-all-errors --retry-delay 10 -A "${DL_UA}" -fLO "$DL_URL/$IB_NAME"
           tar -vxf "$IB_NAME" -C "ib" --strip-components 1
           echo "::endgroup::"
@@ -125,6 +126,7 @@ jobs:
           echo "TARGET_BOARD=${TARGET_BOARD}" >> $GITHUB_ENV
           echo "TARGET_SUBTARGET=${TARGET_SUBTARGET}" >> $GITHUB_ENV
           echo "CUSTOM_DIR=${CUSTOM_DIR}" >> $GITHUB_ENV
+          echo "DL_URL=${DL_URL}" >> $GITHUB_ENV
 
       - name: Compile the package
         run: |
@@ -173,8 +175,8 @@ jobs:
           ls -lh sha256sums
           sed -i "/kernel/d" sha256sums
           sed -i "/rootfs/d" sha256sums
-          rm -vf *kernel.bin 2>/dev/null || true
-          rm -vf *rootfs*.gz 2>/dev/null || true
+          rm -vf *kernel.bin
+          rm -vf *rootfs*.gz
           for filename in ${TARGET_DISTRO}-${TARGET_VERSION}-*; do
             [ -e "${filename}" ] && \
               mv -v "${filename}" "openwrt-${filename#${TARGET_DISTRO}-${TARGET_VERSION}-}"
@@ -199,7 +201,7 @@ jobs:
             echo "## ${BUILD_TARGET}"
             echo
             echo "- **Method:** SDK & Image ${{ github.workflow }}"
-            echo "- **Resource:** <https://downloads.${TARGET_DISTRO}.org/releases/${TARGET_VERSION}/targets/${TARGET_BOARD}/${TARGET_SUBTARGET}>"
+            echo "- **Resource:** <${DL_URL}>"
             echo "- **Release on:** $(date)"
           } > README.md
 

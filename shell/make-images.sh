@@ -1,5 +1,6 @@
 #!/bin/bash
 
+sed -i 's/CONFIG_TARGET_ROOTFS_TARGZ=.*/# CONFIG_TARGET_ROOTFS_TARGZ is not set/g' .config
 sed -i 's/CONFIG_ISO_IMAGES=.*/# CONFIG_ISO_IMAGES is not set/g' .config
 sed -i 's/CONFIG_QCOW2_IMAGES=.*/# CONFIG_QCOW2_IMAGES is not set/' .config
 sed -i 's/CONFIG_VDI_IMAGES=.*/# CONFIG_VDI_IMAGES is not set/' .config
@@ -20,7 +21,7 @@ curl -Ls -o "${CLASH_DIR}/china_ip6_route.ipset" https://raw.githubusercontent.c
 curl -Ls -o "${CLASH_DIR}/Country.mmdb" https://raw.githubusercontent.com/alecthw/mmdb_china_ip_list/release/lite/Country.mmdb
 curl -Ls -o "${CLASH_DIR}/ASN.mmdb" https://raw.githubusercontent.com/xishang0128/geoip/release/GeoLite2-ASN.mmdb
 mkdir -p "${CLASH_DIR}/core"
-curl -Ls -o "${CLASH_DIR}/core/core.tar.gz" https://raw.githubusercontent.com/vernesong/OpenClash/core/master/meta/clash-linux-amd64-v1.tar.gz
+curl -Ls -o "${CLASH_DIR}/core/core.tar.gz" https://raw.githubusercontent.com/vernesong/OpenClash/core/master/meta/clash-linux-amd64-compatible.tar.gz
 tar -zxf "${CLASH_DIR}/core/core.tar.gz" -C "${CLASH_DIR}/core"
 mv -vf "${CLASH_DIR}/core/clash" "${CLASH_DIR}/core/clash_meta"
 rm -vf "${CLASH_DIR}/core/core.tar.gz"
@@ -30,7 +31,7 @@ echo "::group::make info"
 make info
 echo "::endgroup::"
 
-CUSTOM_PKG="${CUSTOM_PKG} \
+CUSTOM_PKG="\
   -kmod-8139cp -kmod-8139too -kmod-amazon-ena -kmod-bnx2 -kmod-dwmac-intel \
   -kmod-forcedeth -kmod-pcnet32 -kmod-r8101 -kmod-tulip -kmod-usb-net-rtl8150 \
   \
@@ -72,7 +73,7 @@ CUSTOM_PKG="${CUSTOM_PKG} \
   luci-app-advanced luci-app-harbor-file luci-app-oaf luci-app-openclash \
   luci-app-rtp2httpd luci-app-wechatpush luci-app-wolplus \
   \
-  luci-i18n-harbor-file-zh-cn luci-i18n-rtp2httpd-zh-cn luci-i18n-oaf-zh-cn \
+  luci-i18n-harbor-file-zh-cn luci-i18n-oaf-zh-cn luci-i18n-rtp2httpd-zh-cn \
   luci-i18n-wechatpush-zh-cn luci-i18n-wolplus-zh-cn \
   "
 
