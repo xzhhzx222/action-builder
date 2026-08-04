@@ -9,7 +9,6 @@ on:
 
 env:
   REPO_URL: https://github.com/immortalwrt/immortalwrt
-  REPO_BRANCH: v25.12.1
   CONFIG_FILE: shell/.config.compile
   DIY_P1_SH: shell/diy-part1.sh
   DIY_P2_SH: shell/diy-part2.sh
@@ -22,6 +21,15 @@ jobs:
     runs-on: ubuntu-24.04
     permissions:
       contents: write
+    
+    strategy:
+      fail-fast: false
+      matrix:
+        target:
+          - "v25.12.1"
+          - "v24.10.6"
+    
+    name: Compile ${{ matrix.target }}
 
     steps:
       - name: Checkout
@@ -64,7 +72,7 @@ jobs:
         working-directory: /workdir
         run: |
           df -hT $PWD
-          git clone $REPO_URL -b $REPO_BRANCH --single-branch --filter=blob:none openwrt
+          git clone $REPO_URL -b ${{ matrix.target }} --single-branch --filter=blob:none openwrt
           ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
 
       - name: Initialization environment
@@ -90,10 +98,10 @@ jobs:
           path: |
             ${{ env.CCACHE_DIR }}
             openwrt/dl
-          # key: cache-compile-${{ env.REPO_BRANCH }}-${{ hashFiles('shell/.config.compile') }}
-          key: cache-compile-${{ env.REPO_BRANCH }}-${{ hashFiles(env.CONFIG_FILE) }}
+          # key: cache-compile-${{ matrix.target }}-${{ hashFiles('shell/.config.compile') }}
+          key: cache-compile-${{ matrix.target }}-${{ hashFiles(env.CONFIG_FILE) }}
           restore-keys: |
-            cache-compile-${{ env.REPO_BRANCH }}-
+            cache-compile-${{ matrix.target }}-
 
       - name: Load custom feeds
         run: |
@@ -192,7 +200,7 @@ jobs:
           echo "release_name=$(date +"%y.%m.%d-%H%M")" >> $GITHUB_OUTPUT
           touch release.txt
           echo "- **Method:** Source Code ${{ github.workflow }}" >> release.txt
-          echo "- **Resource:** <${REPO_URL}/tree/${REPO_BRANCH}>" >> release.txt
+          echo "- **Resource:** <${REPO_URL}/tree/${{ matrix.target }}>" >> release.txt
           echo "- **Release on:** $(date)" >> release.txt
           echo "status=success" >> $GITHUB_OUTPUT
 
