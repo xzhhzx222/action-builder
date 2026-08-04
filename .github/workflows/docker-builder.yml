@@ -22,7 +22,7 @@ jobs:
     runs-on: ubuntu-24.04
     permissions:
       contents: write
-    
+
     strategy:
       fail-fast: false
       matrix:
@@ -123,7 +123,7 @@ jobs:
 
               echo "::group::install procps"
               apt update && apt install -y procps
-              echo "::endgroup::"   
+              echo "::endgroup::"
 
               bash "${MK_PKG_SH}"
             '
