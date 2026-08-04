@@ -7,7 +7,6 @@ sed -i 's/CONFIG_VMDK_IMAGES=.*/# CONFIG_VMDK_IMAGES is not set/' .config
 sed -i 's/CONFIG_VHDX_IMAGES=.*/# CONFIG_VHDX_IMAGES is not set/' .config
 sed -i 's/CONFIG_JSON_OVERVIEW_IMAGE_INFO=.*/# CONFIG_JSON_OVERVIEW_IMAGE_INFO is not set/' .config
 sed -i 's/CONFIG_JSON_CYCLONEDX_SBOM=.*/# CONFIG_JSON_CYCLONEDX_SBOM is not set/' .config
-sed -i 's/# CONFIG_LUCI_LANG_zh_Hans is not set/CONFIG_LUCI_LANG_zh_Hans=y/' .config
 
 CLASH_DIR="files/etc/openclash"
 
@@ -41,6 +40,9 @@ CUSTOM_PKG="${CUSTOM_PKG} \
   \
   luci-app-ddns luci-app-ramfree luci-app-ttyd \
   \
+  luci-i18n-base-zh-cn luci-i18n-ddns-zh-cn luci-i18n-firewall-zh-cn \
+  luci-i18n-package-manager-zh-cn luci-i18n-ramfree-zh-cn luci-i18n-ttyd-zh-cn \
+  \
   luci \
   "
 CUSTOM_PKG="${CUSTOM_PKG} \
@@ -60,6 +62,8 @@ CUSTOM_PKG="${CUSTOM_PKG} \
   \
   luci-app-timewol \
   \
+  luci-i18n-timewol-zh-cn \
+  \
   luci-proto-xfrm \
   "
 CUSTOM_PKG="${CUSTOM_PKG} \
@@ -67,6 +71,9 @@ CUSTOM_PKG="${CUSTOM_PKG} \
   \
   luci-app-advanced luci-app-harbor-file luci-app-oaf luci-app-openclash \
   luci-app-rtp2httpd luci-app-wechatpush luci-app-wolplus \
+  \
+  luci-i18n-harbor-file-zh-cn luci-i18n-rtp2httpd-zh-cn luci-i18n-oaf-zh-cn \
+  luci-i18n-wechatpush-zh-cn luci-i18n-wolplus-zh-cn \
   "
 
 echo "::group::make image"
