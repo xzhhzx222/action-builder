@@ -1,6 +1,6 @@
 # action-builder
 
-Automated OpenWrt/ImmortalWrt build environment with GitHub Actions.
+Automated ImmortalWrt build environment with GitHub Actions.
 
 - Compile custom packages with the SDK
 
@@ -9,6 +9,7 @@ Automated OpenWrt/ImmortalWrt build environment with GitHub Actions.
 ## Source code
 
 - [Immortalwrt](https://github.com/immortalwrt/immortalwrt)
+- [ImmortalWrt Downloads](https://downloads.immortalwrt.org)
 
 ## Idea from
 
