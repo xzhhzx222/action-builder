@@ -12,9 +12,9 @@ echo "::group::feeds update"
 ./scripts/feeds update -a
 echo "::endgroup::"
 
-echo "::group::feeds install luci"
-./scripts/feeds install luci
-echo "::endgroup::"
+# echo "::group::feeds install luci"
+# ./scripts/feeds install luci
+# echo "::endgroup::"
 
 for pkg_name in "${CUSTOM_DIR}"/*/; do
   echo "::group::feeds install $(basename "${pkg_name}")"
