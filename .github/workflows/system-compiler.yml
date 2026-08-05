@@ -215,6 +215,9 @@ jobs:
           make_latest: true
 
       - name: Delete releases and workflows runs
-        uses: peter-evans/repository-dispatch@v4
+        uses: ophub/delete-releases-workflows@main
         with:
-          event-type: Delete older releases and workflows
+          delete_releases: true
+          delete_tags: true
+          releases_keep_latest: 2
+          gh_token: ${{ secrets.GITHUB_TOKEN }}
