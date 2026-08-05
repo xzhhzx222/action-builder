@@ -13,7 +13,7 @@ env:
   DIY_P1_SH: shell/diy-part1.sh
   DIY_P2_SH: shell/diy-part2.sh
   TZ: Asia/Shanghai
-  CCACHE_DIR: ${{ github.workspace }}/openwrt/.ccache
+  CCACHE_DIR: /workdir/openwrt/.ccache
   CUSTOM_DIR: package/xzhhzx222
 
 jobs:
@@ -90,14 +90,14 @@ jobs:
           sudo apt-get -y clean
           echo "::endgroup::"
 
-          mkdir -p "openwrt/.ccache" "openwrt/${CUSTOM_DIR}"
+          mkdir -p "/workdir/openwrt/.ccache" "/workdir/openwrt/${CUSTOM_DIR}"
 
       - name: Setup cache
         uses: actions/cache@v5
         with:
           path: |
-            openwrt/.ccache
-            openwrt/dl
+            /workdir/openwrt/.ccache
+            /workdir/openwrt/dl
           # key: cache-compile-${{ matrix.target }}-${{ hashFiles('shell/.config.compile') }}
           key: cache-compile-${{ matrix.target }}-${{ hashFiles(env.CONFIG_FILE) }}
           restore-keys: |
@@ -166,8 +166,8 @@ jobs:
           echo -e "ccache statistics:"
           ccache -s 2>/dev/null
           echo -e "ccache directory size:"
-          du -sh openwrt/.ccache 2>/dev/null || echo "No ccache directory found."
-          du -sh openwrt/dl 2>/dev/null || echo "No dl directory found."
+          du -sh /workdir/openwrt/.ccache 2>/dev/null || echo "No ccache directory found."
+          du -sh /workdir/openwrt/dl 2>/dev/null || echo "No dl directory found."
 
           echo "::group::targets directory list"
           ls -lah openwrt/bin/targets/*/*/ 2>/dev/null || \
