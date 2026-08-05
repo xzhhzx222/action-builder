@@ -38,3 +38,7 @@ Automated ImmortalWrt build environment with GitHub Actions.
 ### Special thanks
 * [Microsoft Azure](https://azure.microsoft.com)
 * [GitHub Actions](https://github.com/features/actions)
+
+## License
+
+This project is licensed under the [MIT License](https://github.com/xzhhzx222/actions-builder/blob/main/LICENSE)
