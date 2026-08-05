@@ -2,25 +2,39 @@
 
 Automated ImmortalWrt build environment with GitHub Actions.
 
-- Compile custom packages with the SDK
+* Compile custom packages with the SDK
 
-- Build firmware images with the ImageBuilder
+* Build firmware images with the ImageBuilder
 
-## Source code
+## Credits & Acknowledgments
 
-- [immortalwrt/immortalwrt](https://github.com/immortalwrt/immortalwrt)
-- [ImmortalWrt Downloads](https://downloads.immortalwrt.org)
+### Based on
+* [P3TERX/Actions-OpenWrt](https://github.com/P3TERX/Actions-OpenWrt)
 
-## Idea from
+### Inspired by
+* [ophub/amlogic-s9xxx-openwrt](https://github.com/ophub/amlogic-s9xxx-openwrt)
+* [wukongdaily/ImmortalWrt-ImageBuilder](https://github.com/wukongdaily/ImmortalWrt-ImageBuilder)
 
-- [P3TERX/Actions-OpenWrt](https://github.com/P3TERX/Actions-OpenWrt)
-- [ophub/amlogic-s9xxx-openwrt](https://github.com/ophub/amlogic-s9xxx-openwrt)
-- [wukongdaily/ImmortalWrt-ImageBuilder](https://github.com/wukongdaily/ImmortalWrt-ImageBuilder)
+### Tools & Actions Used
+* [ophub/delete-releases-workflows](https://github.com/ophub/delete-releases-workflows)
+* [endersonmenezes/free-disk-space](https://github.com/endersonmenezes/free-disk-space)
+* [softprops/action-gh-release](https://github.com/softprops/action-gh-release)
 
-## Thanks to
+### Upstream Source & Resources
+* [immortalwrt/immortalwrt](https://github.com/immortalwrt/immortalwrt)
+* [ImmortalWrt Downloads](https://downloads.immortalwrt.org)
 
-- [Microsoft Azure](https://azure.microsoft.com)
-- [GitHub Actions](https://github.com/features/actions)
-- [ophub/delete-releases-workflows](https://github.com/ophub/delete-releases-workflows)
-- [endersonmenezes/free-disk-space](https://github.com/endersonmenezes/free-disk-space)
-- [softprops/action-gh-release](https://github.com/softprops/action-gh-release)
+### Packages & Themes
+* [destan19/luci-app-harbor-file](https://github.com/destan19/luci-app-harbor-file)
+* [destan19/OpenAppFilter](https://github.com/destan19/OpenAppFilter)
+* [friendly-bits/geoip-shell](https://github.com/friendly-bits/geoip-shell)
+* [stackia/rtp2httpd](https://github.com/stackia/rtp2httpd)
+* [sirpdboy/luci-app-advanced](https://github.com/sirpdboy/luci-app-advanced)
+* [vernesong/OpenClash](https://github.com/vernesong/OpenClash)
+* [tty228/luci-app-wechatpush](https://github.com/tty228/luci-app-wechatpush)
+* [sundaqiang/openwrt-packages](https://github.com/sundaqiang/openwrt-packages)
+* [jerrykuku/luci-theme-argon](https://github.com/jerrykuku/luci-theme-argon)
+
+### Special thanks
+* [Microsoft Azure](https://azure.microsoft.com)
+* [GitHub Actions](https://github.com/features/actions)
