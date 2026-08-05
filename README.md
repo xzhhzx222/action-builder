@@ -41,4 +41,4 @@ Automated ImmortalWrt build environment with GitHub Actions.
 
 ## License
 
-This project is licensed under the [MIT License](https://github.com/xzhhzx222/actions-builder/blob/main/LICENSE)
+actions-builder © xzhhzx222 is licensed under [MIT](https://github.com/xzhhzx222/actions-builder/blob/main/LICENSE)
