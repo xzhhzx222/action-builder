@@ -6,8 +6,8 @@ name: Docker Builder
 
 on:
   workflow_dispatch:
-    # schedule:
-    #   - cron: 0 18 * * 5
+    schedule:
+      - cron: '0 18 * * 5'
 
 env:
   CONFIG_FILE: shell/.config.build
@@ -28,7 +28,7 @@ jobs:
       matrix:
         target:
           - "immortalwrt/25.12.1+x86-64/generic"
-          # - "immortalwrt/24.10.6+x86-64/generic"
+          - "immortalwrt/24.10.6+x86-64/generic"
           # - "immortalwrt/25.12.1+rockchip-armv8/radxa_e52c"
           # - "immortalwrt/24.10.6+rockchip-armv8/radxa_e52c"
 
@@ -213,9 +213,9 @@ jobs:
             echo
             echo "## ${BUILD_TARGET}"
             echo
-            echo "- **Method:** SDK & Image ${{ github.workflow }}"
-            echo "- **Resource:** <${DL_URL}>"
-            echo "- **Release on:** $(date)"
+            echo "* **Method:** SDK & Image ${{ github.workflow }}"
+            echo "* **Resource:** <${DL_URL}>"
+            echo "* **Release on:** $(date)"
           } > README.md
 
           git add -A

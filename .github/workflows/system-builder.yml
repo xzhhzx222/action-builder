@@ -6,8 +6,8 @@ name: System Builder
 
 on:
   workflow_dispatch:
-    schedule:
-      - cron: '0 18 * * 5'
+    # schedule:
+    #   - cron: '0 18 * * 5'
 
 env:
   CONFIG_FILE: shell/.config.build
@@ -202,9 +202,9 @@ jobs:
             echo
             echo "## ${BUILD_TARGET}"
             echo
-            echo "- **Method:** SDK & Image ${{ github.workflow }}"
-            echo "- **Resource:** <${DL_URL}>"
-            echo "- **Release on:** $(date)"
+            echo "* **Method:** SDK & Image ${{ github.workflow }}"
+            echo "* **Resource:** <${DL_URL}>"
+            echo "* **Release on:** $(date)"
           } > README.md
 
           git add -A

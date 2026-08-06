@@ -6,9 +6,9 @@
 name: Delete older releases and workflows
 
 on:
-  repository_dispatch:
-    types:
-      - Delete older releases and workflows
+  # repository_dispatch:
+  #   types:
+  #     - Delete older releases and workflows
   workflow_dispatch:
   schedule:
    - cron: 0 0 * * *

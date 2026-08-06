@@ -1,4 +1,7 @@
 #!/bin/bash
+#==========================================================================
+# https://github.com/xzhhzx222/actions-builder
+#==========================================================================
 
 sed -i 's/CONFIG_TARGET_ROOTFS_TARGZ=.*/# CONFIG_TARGET_ROOTFS_TARGZ is not set/g' .config
 sed -i 's/CONFIG_ISO_IMAGES=.*/# CONFIG_ISO_IMAGES is not set/g' .config

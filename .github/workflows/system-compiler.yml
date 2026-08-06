@@ -199,9 +199,9 @@ jobs:
         run: |
           echo "release_name=$(date +"%y.%m.%d-%H%M")" >> $GITHUB_OUTPUT
           touch release.txt
-          echo "- **Method:** Source Code ${{ github.workflow }}" >> release.txt
-          echo "- **Source code:** [ImmortalWrt ${{ matrix.target }}](${REPO_URL}/tree/${{ matrix.target }})" >> release.txt
-          echo "- **Release on:** $(date)" >> release.txt
+          echo "* **Method:** Source Code ${{ github.workflow }}" >> release.txt
+          echo "* **Resource:** [ImmortalWrt ${{ matrix.target }}](${REPO_URL}/tree/${{ matrix.target }})" >> release.txt
+          echo "* **Release on:** $(date)" >> release.txt
           echo "status=success" >> $GITHUB_OUTPUT
 
       - name: Upload firmware to release
