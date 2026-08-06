@@ -54,7 +54,7 @@ rm -rf package/vernesong/
 # rm -rf package/Openwrt-Passwall/
 
 # 添加sirpdboy/luci-app-timecontrol
-# git clone https://github.com/sirpdboy/luci-app-timecontrol.git "${CUSTOM_DIR}/luci-app-timecontrol"
+git clone https://github.com/sirpdboy/luci-app-timecontrol.git "${CUSTOM_DIR}/luci-app-timecontrol"
 
 # 添加tty228/luci-app-wechatpush
 git clone https://github.com/tty228/luci-app-wechatpush.git "${CUSTOM_DIR}/luci-app-wechatpush"
