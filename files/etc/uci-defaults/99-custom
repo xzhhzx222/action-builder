@@ -1,6 +1,5 @@
 #!/bin/sh
 
-
 # Luci Settings
 uci set luci.main.lang='zh_cn'
 uci set luci.diag.dns='openwrt.org'
