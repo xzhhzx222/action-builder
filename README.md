@@ -25,8 +25,6 @@ Automated ImmortalWrt build environment with GitHub Actions.
 * [ImmortalWrt Downloads](https://downloads.immortalwrt.org)
 
 ### Packages & Themes
-* [destan19/luci-app-harbor-file](https://github.com/destan19/luci-app-harbor-file)
-* [destan19/OpenAppFilter](https://github.com/destan19/OpenAppFilter)
 * [friendly-bits/geoip-shell](https://github.com/friendly-bits/geoip-shell)
 * [stackia/rtp2httpd](https://github.com/stackia/rtp2httpd)
 * [sirpdboy/luci-app-advanced](https://github.com/sirpdboy/luci-app-advanced)
