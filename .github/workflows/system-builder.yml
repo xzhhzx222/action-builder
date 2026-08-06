@@ -108,14 +108,14 @@ jobs:
           echo "::group::download sdk"
           SDK_NAME="$(cat sha256sums | grep -E "sdk-(.*)${TARGET_PLATFORM}" | cut -d'*' -f2)"
           curl -A "${DL_UA}" --retry 3 --retry-all-errors --retry-delay 10 \
-            --speed-limit 10485760 --speed-time 5 -fLO "$DL_URL/$SDK_NAME"
+            -fLO "$DL_URL/$SDK_NAME"
           tar -vxf "$SDK_NAME" -C "sdk" --strip-components 1
           echo "::endgroup::"
 
           echo "::group::download ib"
           IB_NAME="$(cat sha256sums | grep -E "imagebuilder-(.*)${TARGET_PLATFORM}" | cut -d'*' -f2)"
           curl -A "${DL_UA}" --retry 3 --retry-all-errors --retry-delay 10 \
-            --speed-limit 10485760 --speed-time 5 -fLO "$DL_URL/$IB_NAME"
+            -fLO "$DL_URL/$IB_NAME"
           tar -vxf "$IB_NAME" -C "ib" --strip-components 1
           echo "::endgroup::"
 
