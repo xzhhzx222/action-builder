@@ -24,8 +24,6 @@ CONFIG_LUCI_LANG_zh_Hans=y
 # Applications
 #
 CONFIG_PACKAGE_luci-app-advanced=m
-CONFIG_PACKAGE_luci-app-harbor-file=m
-CONFIG_PACKAGE_luci-app-oaf=m
 CONFIG_PACKAGE_luci-app-openclash=m
 CONFIG_PACKAGE_luci-app-rtp2httpd=m
 CONFIG_PACKAGE_luci-app-wechatpush=m
