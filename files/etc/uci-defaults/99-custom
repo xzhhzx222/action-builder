@@ -1,0 +1,38 @@
+#!/bin/sh
+
+
+# Luci Settings
+uci set luci.main.lang='zh_cn'
+uci set luci.diag.dns='openwrt.org'
+uci set luci.diag.ping='openwrt.org'
+uci set luci.diag.route='openwrt.org'
+uci commit luci
+
+# System Settings
+uci -q batch <<-EOF
+  set system.@system[0].timezone='CST-8'
+  set system.@system[0].zonename='Asia/Shanghai'
+  
+  delete system.ntp.server
+  add_list system.ntp.server='ntp.tencent.com'
+  add_list system.ntp.server='ntp1.aliyun.com'
+  add_list system.ntp.server='ntp.ntsc.ac.cn'
+  add_list system.ntp.server='cn.ntp.org.cn'
+EOF
+uci commit system
+
+# Network Settings
+uci set network.lan.ipaddr='10.0.0.2'
+uci set network.lan.proto='static'
+uci set network.lan.netmask='255.255.255.0'
+uci commit network
+
+sed -i 's/services/control/g' "/usr/lib/lua/luci/controller/wolplus.lua"
+sed -i 's/services/control/g' "/usr/lib/lua/luci/view/wolplus/index.htm"
+
+sed -i "/log-facility/d" "/etc/dnsmasq.conf"
+echo "log-facility=/dev/null" >> "/etc/dnsmasq.conf"
+
+ln -sf "/sbin/ip" "/usr/bin/ip"
+
+exit 0
