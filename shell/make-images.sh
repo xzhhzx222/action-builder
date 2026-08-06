@@ -35,16 +35,16 @@ CUSTOM_PKG="\
   -kmod-8139cp -kmod-8139too -kmod-amazon-ena -kmod-bnx2 -kmod-dwmac-intel \
   -kmod-forcedeth -kmod-pcnet32 -kmod-r8101 -kmod-tulip -kmod-usb-net-rtl8150 \
   \
-  -default-settings -default-settings-chn -dnsmasq -ip-tiny \
+  -default-settings -default-settings-chn -dnsmasq \
   \
   autocore dnsmasq-full htop iperf3 tree vim-full \
   \
-  luci-app-ddns luci-app-ramfree luci-app-ttyd \
+  luci \
+  \
+  luci-app-ddns luci-app-ramfree \
   \
   luci-i18n-base-zh-cn luci-i18n-ddns-zh-cn luci-i18n-firewall-zh-cn \
-  luci-i18n-package-manager-zh-cn luci-i18n-ramfree-zh-cn luci-i18n-ttyd-zh-cn \
-  \
-  luci \
+  luci-i18n-package-manager-zh-cn luci-i18n-ramfree-zh-cn \
   "
 CUSTOM_PKG="${CUSTOM_PKG} \
   kmod-crypto-ecdh kmod-crypto-gcm kmod-crypto-sha256 kmod-inet-diag \
