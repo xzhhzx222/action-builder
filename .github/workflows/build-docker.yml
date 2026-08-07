@@ -2,7 +2,7 @@
 # https://github.com/xzhhzx222/actions-builder
 #==========================================================================
 
-name: Dokcer SDK & Image Builder
+name: SDK & Image Builder (Docker)
 
 on:
   workflow_dispatch:

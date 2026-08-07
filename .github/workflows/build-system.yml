@@ -2,7 +2,7 @@
 # https://github.com/xzhhzx222/actions-builder
 #==========================================================================
 
-name: System SDK & Image Builder
+name: SDK & Image Builder (System)
 
 on:
   workflow_dispatch:
