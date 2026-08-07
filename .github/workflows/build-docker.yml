@@ -159,7 +159,6 @@ jobs:
           docker run --rm -i \
             --user root \
             -v "./ib/bin:${BUILD_DIR}/bin" \
-            # -v "./ib/files:${BUILD_DIR}/files" \
             -v "$GITHUB_WORKSPACE/files:${BUILD_DIR}/files" \
             -v "./ib/packages:${BUILD_DIR}/packages" \
             -v "./shell:${BUILD_DIR}/shell" \
