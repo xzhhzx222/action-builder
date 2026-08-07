@@ -32,14 +32,14 @@ sed -i '/define Package\/geoip-shell\/postinst\/Default/a exit 0' "${CUSTOM_DIR}
 sed -i 's/return 0/exit 0/g' "${CUSTOM_DIR}/geoip-shell/Makefile"
 
 # 添加stackia/rtp2httpd
-# git clone https://github.com/stackia/rtp2httpd.git package/stackia/rtp2httpd
-# mv -vf package/stackia/rtp2httpd/openwrt-support/luci-app-rtp2httpd/ "${CUSTOM_DIR}/"
-# mv -vf package/stackia/rtp2httpd/openwrt-support/rtp2httpd/ "${CUSTOM_DIR}/"
-# rm -rf package/stackia/
+git clone https://github.com/stackia/rtp2httpd.git package/stackia/rtp2httpd
+mv -vf package/stackia/rtp2httpd/openwrt-support/luci-app-rtp2httpd/ "${CUSTOM_DIR}/"
+mv -vf package/stackia/rtp2httpd/openwrt-support/rtp2httpd/ "${CUSTOM_DIR}/"
+rm -rf package/stackia/
 
 # 修改stackia/rtp2httpd
 # mv -vf "${CUSTOM_DIR}/luci-app-rtp2httpd/Makefile.versioned" "${CUSTOM_DIR}/luci-app-rtp2httpd/Makefile"
-# mv -vf "${CUSTOM_DIR}/rtp2httpd/Makefile.versioned" "${CUSTOM_DIR}/rtp2httpd/Makefile"
+mv -vf "${CUSTOM_DIR}/rtp2httpd/Makefile.versioned" "${CUSTOM_DIR}/rtp2httpd/Makefile"
 
 # 添加sirpdboy/luci-app-advanced
 git clone https://github.com/sirpdboy/luci-app-advanced.git "${CUSTOM_DIR}/luci-app-advanced"
@@ -50,9 +50,9 @@ git clone https://github.com/sirpdboy/luci-app-advanced.git "${CUSTOM_DIR}/luci-
 # rm -rf package/fw876
 
 # 添加vernesong/OpenClash
-# git clone --depth=1 https://github.com/vernesong/OpenClash.git package/vernesong/OpenClash
-# mv -vf package/vernesong/OpenClash/luci-app-openclash/ "${CUSTOM_DIR}/"
-# rm -rf package/vernesong/
+git clone --depth=1 https://github.com/vernesong/OpenClash.git package/vernesong/OpenClash
+mv -vf package/vernesong/OpenClash/luci-app-openclash/ "${CUSTOM_DIR}/"
+rm -rf package/vernesong/
 
 # 添加Openwrt-Passwall/openwrt-passwall
 # git clone https://github.com/Openwrt-Passwall/openwrt-passwall-packages.git package/Openwrt-Passwall/openwrt-passwall-packages
@@ -67,11 +67,11 @@ git clone https://github.com/sirpdboy/luci-app-advanced.git "${CUSTOM_DIR}/luci-
 git clone https://github.com/sirpdboy/luci-app-timecontrol.git "${CUSTOM_DIR}/luci-app-timecontrol"
 
 # 添加tty228/luci-app-wechatpush
-# git clone https://github.com/tty228/luci-app-wechatpush.git "${CUSTOM_DIR}/luci-app-wechatpush"
+git clone https://github.com/tty228/luci-app-wechatpush.git "${CUSTOM_DIR}/luci-app-wechatpush"
 
 # 修改tty228/luci-app-wechatpush
 # sed -i 's/\${str_linefeed}/\\\\n/g' "${CUSTOM_DIR}/luci-app-wechatpush/root/usr/share/wechatpush/api/qywx_mpnews.json"
-# sed -i 's/\${1} ${nowtime}/${nowtime}\\\\n${1}/g' "${CUSTOM_DIR}/luci-app-wechatpush/root/usr/share/wechatpush/api/qywx_mpnews.json"
+sed -i 's/\${1} ${nowtime}/${nowtime}\\\\n${1}/g' "${CUSTOM_DIR}/luci-app-wechatpush/root/usr/share/wechatpush/api/qywx_mpnews.json"
 
 # 添加sundaqiang/openwrt-packages
 git clone https://github.com/sundaqiang/openwrt-packages.git package/sundaqiang/openwrt-packages
