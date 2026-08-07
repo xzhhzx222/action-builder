@@ -2,7 +2,7 @@
 # https://github.com/xzhhzx222/actions-builder
 #==========================================================================
 
-name: System Builder
+name: System SDK & Image Builder
 
 on:
   workflow_dispatch:
@@ -202,7 +202,7 @@ jobs:
             echo
             echo "## ${BUILD_TARGET}"
             echo
-            echo "* **Method:** SDK & Image ${{ github.workflow }}"
+            echo "* **Method:** ${{ github.workflow }}"
             echo "* **Resource:** <${DL_URL}>"
             echo "* **Release on:** $(date)"
           } > README.md

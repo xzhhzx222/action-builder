@@ -7,31 +7,32 @@ name: Delete older releases and workflows
 
 on:
   # repository_dispatch:
-  #   types:
-  #     - Delete older releases and workflows
   workflow_dispatch:
-  schedule:
-   - cron: 0 0 * * *
+    schedule:
+     - cron: 0 0 * * *
 
 env:
-  TZ: Asia/Shanghai
+  TZ: Etc/UTC
 
 jobs:
   build:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04-arm
+    # if: ${{ github.event.repository.owner.id == github.event.sender.id }}
     permissions:
       contents: write
       actions: write
 
     steps:
       # - name: Checkout
-      #   uses: actions/checkout@v7
-
-      - name: Initialization environment
-        env:
-          DEBIAN_FRONTEND: noninteractive
-        run: |
-          sudo timedatectl set-timezone "${TZ}"
+      #   uses: actions/checkout@v6
+      #
+      # - name: Initialize the environment
+      #   id: init
+      #   env:
+      #     DEBIAN_FRONTEND: noninteractive
+      #   run: |
+      #     sudo timedatectl set-timezone "${TZ}"
+      #     echo "status=success" >> ${GITHUB_OUTPUT}
 
       - name: Delete releases and workflows runs
         uses: ophub/delete-releases-workflows@main
