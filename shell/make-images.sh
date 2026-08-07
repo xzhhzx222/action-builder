@@ -38,9 +38,9 @@ CUSTOM_PKG="\
   -kmod-8139cp -kmod-8139too -kmod-amazon-ena -kmod-bnx2 -kmod-dwmac-intel \
   -kmod-forcedeth -kmod-pcnet32 -kmod-r8101 -kmod-tulip -kmod-usb-net-rtl8150 \
   \
-  -default-settings -default-settings-chn -dnsmasq \
+  -default-settings -default-settings-chn \
   \
-  autocore dnsmasq-full htop iperf3 tree vim-full \
+  autocore htop iperf3 tree vim-full \
   \
   luci \
   \
