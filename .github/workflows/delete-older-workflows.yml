@@ -3,7 +3,7 @@
 # Description: Delete older releases and workflows runs
 #==========================================================================
 
-name: Delete older releases and workflows
+name: Delete older workflows
 
 on:
   # repository_dispatch:
@@ -34,7 +34,7 @@ jobs:
       #     sudo timedatectl set-timezone "${TZ}"
       #     echo "status=success" >> ${GITHUB_OUTPUT}
 
-      - name: Delete releases and workflows runs
+      - name: Delete workflows runs
         uses: ophub/delete-releases-workflows@main
         with:
           delete_workflows: true
