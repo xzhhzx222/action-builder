@@ -214,7 +214,7 @@ jobs:
           files: ${{ env.FIRMWARE }}/*
           make_latest: true
 
-      - name: Delete releases and workflows runs
+      - name: Delete releases
         uses: ophub/delete-releases-workflows@main
         with:
           delete_releases: true
